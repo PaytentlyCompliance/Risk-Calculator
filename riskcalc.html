@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Score Calculator</title>
+    <script>
+        function calculateRiskScore() {
+            // Define scores for each category
+            const verticalScores = {
+                "Travel, Ecom and Digital goods": 3,
+                "Finserv & Gambling": 6,
+                "Crypto": 8
+            };
+
+            const businessLocationScores = {
+                "EU/EEA/UK": 2,
+                "Non-EU": 4,
+                "Offshore": 6,
+                "High Risk": 8,
+                "HR3C": 10
+            };
+
+            const uboLocationScores = {
+                "EU/EEA/UK": 2,
+                "Non-EU": 4,
+                "Offshore": 6,
+                "High Risk": 8,
+                "HR3C": 10
+            };
+
+            const ownershipScores = {
+                "Complex structure": 7,
+                "Straightforward structure": 2
+            };
+
+            const reputationScores = {
+                "No alerts/red flags": 1,
+                "Hits found": 8
+            };
+
+            // Get selected values
+            const vertical = document.getElementById("vertical").value;
+            const businessLocation = document.getElementById("businessLocation").value;
+            const uboLocation = document.getElementById("uboLocation").value;
+            const ownership = document.getElementById("ownership").value;
+            const reputation = document.getElementById("reputation").value;
+
+            // Calculate total score
+            const totalScore = verticalScores[vertical] +
+                               businessLocationScores[businessLocation] +
+                               uboLocationScores[uboLocation] +
+                               ownershipScores[ownership] +
+                               reputationScores[reputation];
+
+            // Determine risk category
+            let riskCategory;
+            if (totalScore <= 10) {
+                riskCategory = "Low risk";
+            } else if (totalScore <= 20) {
+                riskCategory = "Medium risk";
+            } else if (totalScore <= 30) {
+                riskCategory = "High risk";
+            } else {
+                riskCategory = "Very high risk";
+            }
+
+            // Display result
+            document.getElementById("result").innerHTML = "Total Score: " + totalScore + "<br>Risk Category: " + riskCategory;
+        }
+    </script>
+</head>
+<body>
+    <h1>Risk Score Calculator</h1>
+    <form>
+        <label for="vertical">Vertical:</label>
+        <select id="vertical">
+            <option value="Travel, Ecom and Digital goods">Travel, Ecom and Digital goods</option>
+            <option value="Finserv & Gambling">Finserv & Gambling</option>
+            <option value="Crypto">Crypto</option>
+        </select>
+        <br><br>
+        <label for="businessLocation">Business Location:</label>
+        <select id="businessLocation">
+            <option value="EU/EEA/UK">EU/EEA/UK</option>
+            <option value="Non-EU">Non-EU</option>
+            <option value="Offshore">Offshore</option>
+            <option value="High Risk">High Risk</option>
+            <option value="HR3C">HR3C</option>
+        </select>
+        <br><br>
+        <label for="uboLocation">UBO Location:</label>
+        <select id="uboLocation">
+            <option value="EU/EEA/UK">EU/EEA/UK</option>
+            <option value="Non-EU">Non-EU</option>
+            <option value="Offshore">Offshore</option>
+            <option value="High Risk">High Risk</option>
+            <option value="HR3C">HR3C</option>
+        </select>
+        <br><br>
+        <label for="ownership">Ownership:</label>
+        <select id="ownership">
+            <option value="Complex structure">Complex structure</option>
+            <option value="Straightforward structure">Straightforward structure</option>
+        </select>
+        <br><br>
+        <label for="reputation">Reputation:</label>
+        <select id="reputation">
+            <option value="No alerts/red flags">No alerts/red flags</option>
+            <option value="Hits found">Hits found</option>
+        </select>
+        <br><br>
+        <button type="button" onclick="calculateRiskScore()">Calculate Risk Score</button>
+    </form>
+    <br>
+    <div id="result"></div>
+</body>
+</html>
